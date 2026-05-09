@@ -3,16 +3,18 @@ import {ReactFlow, applyNodeChanges, applyEdgeChanges, addEdge, Controls, Backgr
 import '@xyflow/react/dist/style.css';
 import './App.css'
 import Examination from "./components/Examination/Examination.jsx";
+import Call from "./components/Call/Call.jsx";
 
 const nodeTypes = {
     examination: Examination,
+    call: Call,
 };
 
 const initialNodes = [
     { id: 'n1', position: { x: 100, y: 100 }, data: { label: 'Node 1' }},
     { id: 'n2', position: { x: 0, y: 200 }, data: { label: 'Node 2' }},
-    { id: 'n3', position: { x: 0, y: 300 }, data: { label: 'Node 2', text: "Это проверка" +
-                ""}, type: 'examination'},
+    { id: 'n3', position: { x: 0, y: 300 }, data: { label: 'Node 2', text: "Это проверка"}, type: 'examination'},
+    { id: 'n4', position: { x: 0, y: 400 }, data: { label: 'Node 23', text: "GET_DATA_MOTHERBOARD_HELLO"}, type: 'call'},
 ];
 const initialEdges = [
     { id: 'n1-n2', source: 'n1', target: 'n2' },
