@@ -1,0 +1,16 @@
+.diamond-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.triangle {
+    border: 0 solid transparent;
+    position: absolute;
+}
+
+/* Дополнительный CSS для Handle (на случай, если React Flow навязывает стили) */
+.react-flow__handle {
+    border-radius: 50% !important;
+}
