@@ -77,7 +77,6 @@ export default function Call({ data }) {
                     }}
                 />
             </div>
-
             {/* Точка соединения внизу */}
             <div
                 className="handle-wrapper source"
