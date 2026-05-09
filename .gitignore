@@ -1,0 +1,40 @@
+# IntelliJ IDEA / WebStorm
+.idea/
+*.iml
+*.iws
+
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+yarn-debug.log
+.pnpm-debug.log
+.npm
+.yarn
+
+# Build files
+/dist
+/build
+/out
+/.next
+/nuxt
+/.nuxt
+
+# Environment variables
+.env.local
+.env
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+logs
+*.log
+
+# Testing
+coverage/
+.nyc_output/
+
+# Misc
+.DS_Store
+Thumbs.db
