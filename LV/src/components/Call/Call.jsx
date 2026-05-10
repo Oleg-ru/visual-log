@@ -1,9 +1,9 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import './Call.css';
 import { Handle } from '@xyflow/react';
 import { useFitText } from '../../hooks/useFitText';
 import JsonViewer from '../JsonViewer';
+import InfoModal from '../InfoModal/InfoModal';
 
 export default function Call({ data }) {
     const [showInfo, setShowInfo] = useState(false);
@@ -12,7 +12,6 @@ export default function Call({ data }) {
     const height = 60;
     const skew = 20;
     const handleSize = 6;
-    const scrollContainerRef = useRef(null);
 
     const { fontSize, ref: textRef } = useFitText(
         text,
@@ -26,30 +25,10 @@ export default function Call({ data }) {
         }
     );
 
-    // Обработчик прокрутки
-    useEffect(() => {
-        const container = scrollContainerRef.current;
-        if (!container) return;
-
-        const handleWheel = (e) => {
-            e.stopPropagation();
-
-            // Прокручиваем внутренний контейнер
-            container.scrollTop += e.deltaY;
-
-            // Предотвращаем прокрутку страницы/холста
-            e.preventDefault();
-        };
-
-        container.addEventListener('wheel', handleWheel, { passive: false });
-
-        return () => {
-            container.removeEventListener('wheel', handleWheel);
-        };
-    }, [showInfo]); // Пересоздаем эффект при открытии/закрытии
     const closeJson = () => {
-        setShowInfo(false)
+        setShowInfo(false);
     };
+
     return (
         <div
             className="parallelogram-container"
@@ -70,48 +49,20 @@ export default function Call({ data }) {
                 ℹ️
             </button>
 
-            {showInfo && (
-                <div style={{
-                    position: 'absolute',
-                    top: '0',
-                    left: '260%',
-                    transform: 'translateX(-50%)',
-                    backgroundColor: '#1e1e1e',
-                    border: '1px solid #3c3c3c',
-                    borderRadius: '6px',
-                    padding: '0',
-                    boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
-                    zIndex: 10,
-                    minWidth: '300px',
-                    maxWidth: '500px',
-                    maxHeight: '400px',
-                }}>
-                    <div style={{display: "flex", justifyContent: "right"}}>
-                        <button style={{}} onClick={closeJson}>❌</button>
+            <InfoModal
+                isVisible={showInfo}
+                onClose={closeJson}
+                viewerType="json"
+                leftOffset="260%"  // можно менять на любое значение, например "200%", "300%" и т.д.
+            >
+                {jsonData ? (
+                    <JsonViewer dataJson={jsonData} />
+                ) : (
+                    <div style={{ color: '#f8f8f2' }}>
+                        Нет данных
                     </div>
-                    <div
-                        ref={scrollContainerRef}
-                        style={{
-                            padding: '12px',
-                            fontFamily: 'monospace',
-                            fontSize: '12px',
-                            color: '#d4d4d4',
-                            backgroundColor: '#1e1e1e',
-                            maxHeight: '400px',
-                            overflowY: 'auto',
-                            overflowX: 'auto'
-                        }}
-                    >
-                        {jsonData ? (
-                            <JsonViewer dataJson={jsonData} />
-                        ) : (
-                            <div style={{ color: '#f8f8f2' }}>
-                                Нет данных
-                            </div>
-                        )}
-                    </div>
-                </div>
-            )}
+                )}
+            </InfoModal>
 
             {/* Параллелограмм */}
             <div
