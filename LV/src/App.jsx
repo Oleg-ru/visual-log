@@ -1,24 +1,38 @@
 import { useState, useCallback } from 'react';
-import {ReactFlow, applyNodeChanges, applyEdgeChanges, addEdge, Controls, Background} from '@xyflow/react';
+import {
+    ReactFlow,
+    applyNodeChanges,
+    applyEdgeChanges,
+    addEdge,
+    Controls,
+    Background,
+    BackgroundVariant
+} from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import './App.css'
 import Examination from "./components/Examination/Examination.jsx";
 import Call from "./components/Call/Call.jsx";
+import Variable from "./components/Variable/Variable.jsx";
+import CustomParallelogramNode from "./components/SvgComponent/CustomParallelogramNode.jsx";
 
 const nodeTypes = {
     examination: Examination,
     call: Call,
+    variable: Variable,
 };
 
 const initialNodes = [
     { id: 'n1', position: { x: 100, y: 100 }, data: { label: 'Node 1' }},
     { id: 'n2', position: { x: 0, y: 200 }, data: { label: 'Node 2' }},
-    { id: 'n3', position: { x: 0, y: 300 }, data: { label: 'Node 2', text: "Это проверка"}, type: 'examination'},
+    { id: 'n3', position: { x: 20, y: 300 }, data: { label: 'Node 2', text: "Это проверка"}, type: 'examination'},
     { id: 'n4', position: { x: 0, y: 400 }, data: { label: 'Node 23', text: "GET_DATA_MOTHERBOARD_HELLO"}, type: 'call'},
+    { id: 'n5', position: { x: 0, y: 500 }, data: { label: 'var', text: "Это переменная описывает что то"}, type: 'variable'},
 ];
 const initialEdges = [
-    { id: 'n1-n2', source: 'n1', target: 'n2' },
-    { id: 'n1-n3', source: 'n1', target: 'n3' },
+    { id: 'n1-n2', source: 'n1', target: 'n2', animated: true },
+    { id: 'n2-n3', source: 'n2', target: 'n3', animated: true },
+    { id: 'n3-n4', source: 'n3', target: 'n4', animated: true },
+    { id: 'n4-n5', source: 'n4', target: 'n5', animated: true },
 ];
 
 export default function App() {
@@ -39,7 +53,7 @@ export default function App() {
     );
 
     return (
-        <div style={{ width: '100vw', height: '100vh' }}>
+        <div style={{ width: '99vw', height: '98vh' }}>
             <ReactFlow
                 nodes={nodes}
                 edges={edges}
@@ -49,7 +63,6 @@ export default function App() {
                 onConnect={onConnect}
                 fitView
             >
-                <Background />
                 <Controls />
             </ReactFlow>
         </div>

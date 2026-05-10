@@ -2,11 +2,25 @@
 import React from 'react';
 import './Examination.css';
 import { Handle } from '@xyflow/react';
+import { useFitText } from '../../hooks/useFitText';
 
 export default function Examination({ data }) {
     const { text = 'Проверка' } = data;
     const diamondSize = 80;
     const handleSize = 6;
+    
+    // Используем хук для подбора размера текста
+    const { fontSize, ref: textRef } = useFitText(
+        text, 
+        diamondSize, 
+        diamondSize,
+        { 
+            maxFontSize: 14, 
+            minFontSize: 8,
+            widthRatio: 0.7, // Меньше коэффициент из-за формы ромба
+            heightRatio: 0.7 
+        }
+    );
 
     return (
         <div className="diamond-container" style={{ width: diamondSize, height: diamondSize }}>
@@ -92,12 +106,16 @@ export default function Examination({ data }) {
                 zIndex: 2,
                 pointerEvents: 'none'
             }}>
-                <span style={{
-                    whiteSpace: 'nowrap',
-                    fontSize: '12px',
-                    position: 'relative',
-                    zIndex: 2
-                }}>{text}</span>
+                <span 
+                    ref={textRef}
+                    style={{
+                        whiteSpace: 'nowrap',
+                        fontSize: `${fontSize}px`,
+                        position: 'relative',
+                        zIndex: 2,
+                        display: 'inline-block'
+                    }}
+                >{text}</span>
             </div>
 
             {/* Точка соединения вверху */}

@@ -1,90 +1,75 @@
-// src/components/Call/Call.jsx
+// src/components/Variable/Variable.jsx
 import React from 'react';
-import './Call.css';
+import './Variable.css';
 import { Handle } from '@xyflow/react';
 import { useFitText } from '../../hooks/useFitText';
 
-export default function Call({ data }) {
-    const { text = 'Вызов' } = data;
+export default function Variable({ data }) {
+    const { text = 'Переменная' } = data;
     const width = 120;
-    const height = 60;
-    const skew = 20;
+    const height = 40;
     const handleSize = 6;
-
-    // Используем универсальный хук для подбора размера текста
-    // Коэффициент 0.8 соответствует maxContentWidth = width * 0.8 из оригинального кода
+    
+    // Используем хук для подбора размера текста
     const { fontSize, ref: textRef } = useFitText(
         text, 
         width, 
         height,
         { 
-            maxFontSize: 12, 
-            minFontSize: 6,
-            widthRatio: 0.8, 
-            heightRatio: 0.7 
+            maxFontSize: 14, 
+            minFontSize: 8,
+            widthRatio: 0.85, // Высокий коэффициент, так как это простой прямоугольник
+            heightRatio: 0.8 
         }
     );
 
     return (
-        <div
-            className="parallelogram-container"
-            style={{ width, height, position: 'relative' }}
-        >
-            <button style={{position: "absolute", top: "0",left: "85%" , zIndex: "3", border: "none", background: "none"}}
-                    onClick={}>
-                ℹ️
-            </button>
-            {/* Параллелограмм */}
-            <div
-                className="parallelogram"
+        <div className="variable-container" style={{ width, height }}>
+            {/* Основной прямоугольник с скругленными краями */}
+            <div 
+                className="variable"
                 style={{
                     width: `${width}px`,
                     height: `${height}px`,
-                    backgroundColor: '#a5cfef',
-                    border: '1px solid #000',
+                    backgroundColor: '#a5cfef', // Светло-синий фон
+                    border: '1px solid black', // Синяя обводка
+                    borderRadius: '8px', // Слегка скругленные края
                     position: 'absolute',
                     top: 0,
                     left: 0,
-                    transform: `skewX(-${skew}deg)`,
-                    zIndex: 1,
                 }}
             />
-
-            {/* Контент с динамическим шрифтом */}
-            <div
-                className="content"
-                style={{
-                    position: 'absolute',
-                    top: '50%',
-                    left: '50%',
-                    transform: `translate(-50%, -50%) skewX(${skew}deg)`,
-                    zIndex: 2,
-                    pointerEvents: 'none',
-                    textAlign: 'center',
-                    width: '100%',
-                }}
-            >
-        <span
-            ref={textRef}
-            style={{
-                transform: 'skewX(-20deg)',
-                whiteSpace: 'nowrap',
-                fontSize: `${fontSize}px`,
-                fontWeight: 'normal',
-                display: 'inline-block', // Важно для offsetWidth
-            }}
-        >
-          {text}
-        </span>
+            
+            {/* Контент внутри прямоугольника */}
+            <div className="content" style={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                zIndex: 2,
+                pointerEvents: 'none',
+                textAlign: 'center',
+                width: '100%'
+            }}>
+                <span 
+                    ref={textRef}
+                    style={{
+                        whiteSpace: 'nowrap',
+                        fontSize: `${fontSize}px`,
+                        position: 'relative',
+                        zIndex: 2,
+                        display: 'inline-block'
+                    }}
+                >{text}</span>
             </div>
 
-            {/* Handle сверху */}
+            {/* Точка соединения вверху */}
             <div
                 className="handle-wrapper target"
                 style={{
                     position: 'absolute',
                     left: '50%',
-                    top: `-${handleSize / 2}px`,
+                    top: `-${handleSize/2}px`,
                     transform: 'translateX(-50%)',
                     width: handleSize,
                     height: handleSize,
@@ -104,19 +89,19 @@ export default function Call({ data }) {
                         height: '100%',
                         background: 'transparent',
                         border: 'none',
-                        borderRadius: '50%',
+                        borderRadius: '100%',
                         cursor: 'pointer',
                     }}
                 />
             </div>
 
-            {/* Handle снизу */}
+            {/* Точка соединения внизу */}
             <div
                 className="handle-wrapper source"
                 style={{
                     position: 'absolute',
                     left: '50%',
-                    bottom: `-${handleSize / 2 + 3}px`,
+                    bottom: `-${handleSize/2 + 3}px`,
                     transform: 'translateX(-50%)',
                     width: handleSize,
                     height: handleSize,
