@@ -4,6 +4,7 @@ import { Handle } from '@xyflow/react';
 import { useFitText } from '../../hooks/useFitText';
 import JsonViewer from '../JsonViewer';
 import InfoModal from '../InfoModal/InfoModal';
+import SearchableJsonViewer from "../JsonViewer";
 
 export default function Call({ data }) {
     const [showInfo, setShowInfo] = useState(false);
@@ -56,7 +57,7 @@ export default function Call({ data }) {
                 leftOffset="260%"  // можно менять на любое значение, например "200%", "300%" и т.д.
             >
                 {jsonData ? (
-                    <JsonViewer dataJson={jsonData} />
+                    <SearchableJsonViewer dataJson={jsonData} />
                 ) : (
                     <div style={{ color: '#f8f8f2' }}>
                         Нет данных
