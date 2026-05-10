@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from 'react';
+import './InfoModal.css'
 
 const InfoModal = ({ children, isVisible, onClose, viewerType = 'json', leftOffset = '260%' }) => {
     const scrollContainerRef = useRef(null);
@@ -25,47 +26,20 @@ const InfoModal = ({ children, isVisible, onClose, viewerType = 'json', leftOffs
 
     return (
         <div
-            style={{
-                position: 'absolute',
-                top: '0',
-                left: leftOffset,
-                transform: 'translateX(-50%)',
-                backgroundColor: '#1e1e1e',
-                border: '1px solid #3c3c3c',
-                borderRadius: '6px',
-                padding: '0',
-                boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
-                zIndex: 10,
-                minWidth: '300px',
-                maxWidth: '500px',
-                maxHeight: '400px',
-            }}
+            style={{left: leftOffset}}
+            className="modal-container"
         >
-            <div style={{ display: "flex", justifyContent: "right", padding: '4px' }}>
+            <div className="modal-btn-container">
                 <button
                     onClick={onClose}
-                    style={{
-                        background: 'none',
-                        border: 'none',
-                        cursor: 'pointer',
-                        fontSize: '14px'
-                    }}
+                    className="modal-close-btn"
                 >
                     ❌
                 </button>
             </div>
             <div
                 ref={scrollContainerRef}
-                style={{
-                    padding: '12px',
-                    fontFamily: 'monospace',
-                    fontSize: '12px',
-                    color: '#d4d4d4',
-                    backgroundColor: '#1e1e1e',
-                    maxHeight: '360px',
-                    overflowY: 'auto',
-                    overflowX: 'auto'
-                }}
+                className="modal-content"
             >
                 {children}
             </div>
