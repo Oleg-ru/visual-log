@@ -15,7 +15,7 @@ import Call from "./components/Call/Call.jsx";
 import Variable from "./components/Variable/Variable.jsx";
 import CustomParallelogramNode from "./components/SvgComponent/CustomParallelogramNode.jsx";
 
-const data = {
+const dataJson = {
     "text": "Аналитика продаж",
     "jsonData": {
         "period": "2024-01",
@@ -53,7 +53,7 @@ const initialNodes = [
     { id: 'n1', position: { x: 100, y: 100 }, data: { label: 'Node 1' }},
     { id: 'n2', position: { x: 0, y: 200 }, data: { label: 'Node 2' }},
     { id: 'n3', position: { x: 20, y: 300 }, data: { label: 'Node 2', text: "Это проверка"}, type: 'examination'},
-    { id: 'n4', position: { x: 0, y: 400 }, data: { label: 'Node 23', text: "GET_DATA_MOTHERBOARD_HELLO"}, type: 'call', data: data},
+    { id: 'n4', position: { x: 0, y: 400 }, data: { label: 'Node 23', text: "GET_DATA_MOTHERBOARD_HELLO", jsonData: dataJson}, type: 'call'},
     { id: 'n5', position: { x: 0, y: 500 }, data: { label: 'var', text: "Это переменная описывает что то"}, type: 'variable'},
 ];
 const initialEdges = [

@@ -1,7 +1,7 @@
 // src/components/JsonViewer.jsx
 import React, { useState } from 'react';
 
-const JsonViewer = ({ data, depth = 0 }) => {
+const JsonViewer = ({ dataJson, depth = 0 }) => {
     const [isCollapsed, setIsCollapsed] = useState(depth >= 2);
 
     // Обработчик для предотвращения прокрутки родителя
@@ -9,16 +9,16 @@ const JsonViewer = ({ data, depth = 0 }) => {
         e.stopPropagation(); // Останавливаем всплытие события
     };
 
-    if (data === null || typeof data !== 'object') {
+    if (dataJson === null || typeof dataJson !== 'object') {
         return (
             <span style={{ color: '#ce9178' }}>
-                {typeof data === 'string' ? `"${data}"` : String(data)}
+                {typeof dataJson === 'string' ? `"${dataJson}"` : String(dataJson)}
             </span>
         );
     }
 
-    const isArray = Array.isArray(data);
-    const keys = Object.keys(data);
+    const isArray = Array.isArray(dataJson);
+    const keys = Object.keys(dataJson);
 
     return (
         <div style={{ marginLeft: depth === 0 ? '0px' : '20px' }}>
@@ -41,7 +41,7 @@ const JsonViewer = ({ data, depth = 0 }) => {
                             <span style={{ color: '#9cdcfe' }}>"{key}"</span>
                             <span style={{ color: '#d4d4d4' }}>: </span>
                             <JsonViewer
-                                data={data[key]}
+                                dataJson={dataJson[key]}
                                 depth={depth + 1}
                             />
                             {index < keys.length - 1 && <span style={{ color: '#d4d4d4' }}>,</span>}

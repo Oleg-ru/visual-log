@@ -103,7 +103,7 @@ export default function Call({ data }) {
                         }}
                     >
                         {jsonData ? (
-                            <JsonViewer data={jsonData} />
+                            <JsonViewer dataJson={jsonData} />
                         ) : (
                             <div style={{ color: '#f8f8f2' }}>
                                 Нет данных
