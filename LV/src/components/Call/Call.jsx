@@ -1,10 +1,11 @@
 // src/components/Call/Call.jsx
-import React from 'react';
+import React, { useState } from 'react';
 import './Call.css';
 import { Handle } from '@xyflow/react';
 import { useFitText } from '../../hooks/useFitText';
 
 export default function Call({ data }) {
+    const [showInfo, setShowInfo] = useState(false);
     const { text = 'Вызов' } = data;
     const width = 120;
     const height = 60;
@@ -31,9 +32,26 @@ export default function Call({ data }) {
             style={{ width, height, position: 'relative' }}
         >
             <button style={{position: "absolute", top: "0",left: "85%" , zIndex: "3", border: "none", background: "none"}}
-                    onClick={}>
+                    onClick={() => setShowInfo(!showInfo)}>
                 ℹ️
             </button>
+            {showInfo && (
+                <div style={{
+                    position: 'absolute',
+                    top: '0',
+                    left: '160%',
+                    transform: 'translateX(-50%)',
+                    backgroundColor: 'white',
+                    border: '1px solid #ccc',
+                    borderRadius: '4px',
+                    padding: '8px',
+                    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                    zIndex: 10,
+                    whiteSpace: 'nowrap'
+                }}>
+                    Информация
+                </div>
+            )}
             {/* Параллелограмм */}
             <div
                 className="parallelogram"
