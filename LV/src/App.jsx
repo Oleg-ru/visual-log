@@ -15,6 +15,34 @@ import Call from "./components/Call/Call.jsx";
 import Variable from "./components/Variable/Variable.jsx";
 import CustomParallelogramNode from "./components/SvgComponent/CustomParallelogramNode.jsx";
 
+const data = {
+    "text": "Аналитика продаж",
+    "jsonData": {
+        "period": "2024-01",
+        "metrics": {
+            "revenue": 125000,
+            "orders": 342,
+            "average_check": 365.5,
+            "conversion_rate": 3.45
+        },
+        "top_products": [
+            { "id": "P001", "name": "Ноутбук", "sales": 45, "revenue": 112500 },
+            { "id": "P002", "name": "Мышь", "sales": 120, "revenue": 3600 },
+            { "id": "P003", "name": "Клавиатура", "sales": 89, "revenue": 8900 }
+        ],
+        "daily_stats": {
+            "2024-01-01": { "orders": 12, "revenue": 4200 },
+            "2024-01-02": { "orders": 15, "revenue": 5300 },
+            "2024-01-03": { "orders": 8, "revenue": 2900 }
+        },
+        "forecast": {
+            "next_month": 145000,
+            "confidence": 0.85,
+            "trend": "increasing"
+        }
+    }
+};
+
 const nodeTypes = {
     examination: Examination,
     call: Call,
@@ -25,7 +53,7 @@ const initialNodes = [
     { id: 'n1', position: { x: 100, y: 100 }, data: { label: 'Node 1' }},
     { id: 'n2', position: { x: 0, y: 200 }, data: { label: 'Node 2' }},
     { id: 'n3', position: { x: 20, y: 300 }, data: { label: 'Node 2', text: "Это проверка"}, type: 'examination'},
-    { id: 'n4', position: { x: 0, y: 400 }, data: { label: 'Node 23', text: "GET_DATA_MOTHERBOARD_HELLO"}, type: 'call'},
+    { id: 'n4', position: { x: 0, y: 400 }, data: { label: 'Node 23', text: "GET_DATA_MOTHERBOARD_HELLO"}, type: 'call', data: data},
     { id: 'n5', position: { x: 0, y: 500 }, data: { label: 'var', text: "Это переменная описывает что то"}, type: 'variable'},
 ];
 const initialEdges = [
@@ -62,6 +90,7 @@ export default function App() {
                 onEdgesChange={onEdgesChange}
                 onConnect={onConnect}
                 fitView
+                nodesDraggable={false}
             >
                 <Controls />
             </ReactFlow>

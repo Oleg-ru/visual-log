@@ -1,57 +1,118 @@
-// src/components/Call/Call.jsx
-import React, { useState } from 'react';
+
+import React, { useState, useRef, useEffect } from 'react';
 import './Call.css';
 import { Handle } from '@xyflow/react';
 import { useFitText } from '../../hooks/useFitText';
+import JsonViewer from '../JsonViewer';
 
 export default function Call({ data }) {
     const [showInfo, setShowInfo] = useState(false);
-    const { text = 'Вызов' } = data;
+    const { text = 'Вызов', jsonData = null } = data;
     const width = 120;
     const height = 60;
     const skew = 20;
     const handleSize = 6;
+    const scrollContainerRef = useRef(null);
 
-    // Используем универсальный хук для подбора размера текста
-    // Коэффициент 0.8 соответствует maxContentWidth = width * 0.8 из оригинального кода
     const { fontSize, ref: textRef } = useFitText(
-        text, 
-        width, 
+        text,
+        width,
         height,
-        { 
-            maxFontSize: 12, 
+        {
+            maxFontSize: 12,
             minFontSize: 6,
-            widthRatio: 0.8, 
-            heightRatio: 0.7 
+            widthRatio: 0.8,
+            heightRatio: 0.7
         }
     );
 
+    // Обработчик прокрутки
+    useEffect(() => {
+        const container = scrollContainerRef.current;
+        if (!container) return;
+
+        const handleWheel = (e) => {
+            e.stopPropagation();
+
+            // Прокручиваем внутренний контейнер
+            container.scrollTop += e.deltaY;
+
+            // Предотвращаем прокрутку страницы/холста
+            e.preventDefault();
+        };
+
+        container.addEventListener('wheel', handleWheel, { passive: false });
+
+        return () => {
+            container.removeEventListener('wheel', handleWheel);
+        };
+    }, [showInfo]); // Пересоздаем эффект при открытии/закрытии
+    const closeJson = () => {
+        setShowInfo(false)
+    };
     return (
         <div
             className="parallelogram-container"
             style={{ width, height, position: 'relative' }}
         >
-            <button style={{position: "absolute", top: "0",left: "85%" , zIndex: "3", border: "none", background: "none"}}
-                    onClick={() => setShowInfo(!showInfo)}>
+            <button
+                style={{
+                    position: "absolute",
+                    top: "0",
+                    left: "85%",
+                    zIndex: "3",
+                    border: "none",
+                    background: "none",
+                    cursor: "pointer"
+                }}
+                onClick={() => setShowInfo(!showInfo)}
+            >
                 ℹ️
             </button>
+
             {showInfo && (
                 <div style={{
                     position: 'absolute',
                     top: '0',
-                    left: '160%',
+                    left: '260%',
                     transform: 'translateX(-50%)',
-                    backgroundColor: 'white',
-                    border: '1px solid #ccc',
-                    borderRadius: '4px',
-                    padding: '8px',
-                    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                    backgroundColor: '#1e1e1e',
+                    border: '1px solid #3c3c3c',
+                    borderRadius: '6px',
+                    padding: '0',
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
                     zIndex: 10,
-                    whiteSpace: 'nowrap'
+                    minWidth: '300px',
+                    maxWidth: '500px',
+                    maxHeight: '400px',
                 }}>
-                    Информация
+                    <div style={{display: "flex", justifyContent: "right"}}>
+                        <button style={{}} onClick={closeJson}>❌</button>
+                    </div>
+                    <div
+                        ref={scrollContainerRef}
+                        style={{
+                            padding: '12px',
+                            fontFamily: 'monospace',
+                            fontSize: '12px',
+                            color: '#d4d4d4',
+                            backgroundColor: '#1e1e1e',
+                            maxHeight: '400px',
+                            overflowY: 'auto',
+                            overflowX: 'auto'
+                        }}
+                    >
+                        {jsonData ? (
+                            <JsonViewer data={jsonData} />
+                        ) : (
+                            <div style={{ color: '#f8f8f2' }}>
+                                Нет данных
+                            </div>
+                        )}
+                    </div>
                 </div>
             )}
+
             {/* Параллелограмм */}
             <div
                 className="parallelogram"
@@ -82,18 +143,18 @@ export default function Call({ data }) {
                     width: '100%',
                 }}
             >
-        <span
-            ref={textRef}
-            style={{
-                transform: 'skewX(-20deg)',
-                whiteSpace: 'nowrap',
-                fontSize: `${fontSize}px`,
-                fontWeight: 'normal',
-                display: 'inline-block', // Важно для offsetWidth
-            }}
-        >
-          {text}
-        </span>
+                <span
+                    ref={textRef}
+                    style={{
+                        transform: 'skewX(-20deg)',
+                        whiteSpace: 'nowrap',
+                        fontSize: `${fontSize}px`,
+                        fontWeight: 'normal',
+                        display: 'inline-block',
+                    }}
+                >
+                    {text}
+                </span>
             </div>
 
             {/* Handle сверху */}
