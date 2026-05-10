@@ -4,17 +4,13 @@ import {
     applyNodeChanges,
     applyEdgeChanges,
     addEdge,
-    Controls,
-    Background,
-    BackgroundVariant
+    Controls
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import './App.css'
 import Examination from "./components/Examination/Examination.jsx";
 import Call from "./components/Call/Call.jsx";
 import Variable from "./components/Variable/Variable.jsx";
-import CustomParallelogramNode from "./components/SvgComponent/CustomParallelogramNode.jsx";
-
 const dataJson = {
     "text": "Аналитика продаж",
     "jsonData": {
