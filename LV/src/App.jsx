@@ -1,9 +1,6 @@
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 import {
     ReactFlow,
-    applyNodeChanges,
-    applyEdgeChanges,
-    addEdge,
     Controls
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
@@ -11,6 +8,8 @@ import './App.css'
 import Examination from "./components/Examination/Examination.jsx";
 import Call from "./components/Call/Call.jsx";
 import Variable from "./components/Variable/Variable.jsx";
+
+//test data
 const dataJson = {
     "text": "Аналитика продаж",
     "jsonData": {
@@ -63,28 +62,12 @@ export default function App() {
     const [nodes, setNodes] = useState(initialNodes);
     const [edges, setEdges] = useState(initialEdges);
 
-    const onNodesChange = useCallback(
-        (changes) => setNodes((nodesSnapshot) => applyNodeChanges(changes, nodesSnapshot)),
-        [],
-    );
-    const onEdgesChange = useCallback(
-        (changes) => setEdges((edgesSnapshot) => applyEdgeChanges(changes, edgesSnapshot)),
-        [],
-    );
-    const onConnect = useCallback(
-        (params) => setEdges((edgesSnapshot) => addEdge(params, edgesSnapshot)),
-        [],
-    );
-
     return (
         <div style={{ width: '99vw', height: '98vh' }}>
             <ReactFlow
                 nodes={nodes}
                 edges={edges}
                 nodeTypes={nodeTypes}
-                onNodesChange={onNodesChange}
-                onEdgesChange={onEdgesChange}
-                onConnect={onConnect}
                 fitView
                 nodesDraggable={false}
             >
